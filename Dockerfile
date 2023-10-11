@@ -85,7 +85,7 @@ RUN apt-get -y update \
     php-pear \
     php-db \
     php-intl \
-    python3-dev \
+    python3.7-dev \
     python3-psycopg2 \
     curl \
     ca-certificates \
