@@ -7,17 +7,13 @@ ARG nominatim_version
 # Let the container know that there is no TTY
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Compile CMake from source
+# Install CMake from Kitware's official APT repository
 RUN apt-get update \
- && apt-get install -y wget libssl-dev build-essential \
- && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz \
- && tar -xvzf cmake-3.18.4.tar.gz \
- && cd cmake-3.18.4 \
- && ./bootstrap \
- && make \
- && make install \
- && cd .. \
- && rm -rf cmake-3.18.4.tar.gz cmake-3.18.4
+ && apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common \
+ && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - \
+ && apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main' \
+ && apt-get update \
+ && apt-get install -y cmake=3.18.4-0kitware1ubuntu16.04.1
 
 
 
