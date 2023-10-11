@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install CMake from Kitware's official APT repository
 RUN apt-get update \
- && apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common \
+ && apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget \
  && wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg \
  && echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ xenial main" > /etc/apt/sources.list.d/kitware.list \
  && apt-get update \
