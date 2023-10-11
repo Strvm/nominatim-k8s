@@ -83,8 +83,11 @@ LABEL \
 # Let the container know that there is no TTY
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Set locale and install packages
-ENV LANG C.UTF-8
+# Add the PostgreSQL Official Repository
+RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
+ && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+# Update and install packages
 RUN apt-get -y update \
  && apt-get install -y -qq --no-install-recommends locales \
  && locale-gen en_US.UTF-8 \
@@ -101,14 +104,15 @@ RUN apt-get -y update \
     php-pear \
     php-db \
     php-intl \
-    python3.7-dev \
+    python3-dev \  # Changed from python3.7-dev to python3-dev
     python3-psycopg2 \
     curl \
     ca-certificates \
     sudo \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* /var/tmp/*
+ && rm -rf /tmp/* /var/tmp/
+
 
 
 # Copy the application from the builder image
