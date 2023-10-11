@@ -92,7 +92,7 @@ RUN apt-get -y update && \
 
 RUN apt-get install -y --no-install-recommends locales \
         postgresql-server-dev-14 \
-        postgresql-14-postgis-2.2 \
+        postgresql-14-postgis-3 \
         postgresql-contrib-14 \
         apache2 \
         php \
