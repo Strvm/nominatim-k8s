@@ -30,7 +30,7 @@ RUN apt-get -y update \
 
 # Build Nominatim
 RUN cd /srv \
- && curl --silent -L http://www.nominatim.org/release/Nominatim-${nominatim_version}.tar.bz2 -o v${nominatim_version}.tar.bz2 \
+ && curl -k --silent -L http://www.nominatim.org/release/Nominatim-${nominatim_version}.tar.bz2 -o v${nominatim_version}.tar.bz2 \
  && tar xf v${nominatim_version}.tar.bz2 \
  && rm v${nominatim_version}.tar.bz2 \
  && mv Nominatim-${nominatim_version} nominatim \
