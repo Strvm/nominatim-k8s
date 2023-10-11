@@ -25,7 +25,7 @@ RUN apt-get install -y -qq --no-install-recommends \
     build-essential \
     cmake \
     g++ \
-    nlohmann-json-dev \
+    nlohmann-json3-dev \
     liblua5.2-dev \
     libboost-dev \
     libboost-system-dev \
