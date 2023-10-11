@@ -1,4 +1,4 @@
-ARG nominatim_version=3.5.2
+ARG nominatim_version=4.3.1
 
 FROM peterevans/xenial-gcloud:1.2.23 as builder
 
