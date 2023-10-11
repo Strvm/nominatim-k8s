@@ -1,7 +1,7 @@
 ARG nominatim_version=4.3.1
 
 #FROM peterevans/xenial-gcloud:1.2.23 as builder
-FROM ubuntu:18.04 as builder
+FROM ubuntu:20.04 as builder
 ARG nominatim_version
 
 # Let the container know that there is no TTY
