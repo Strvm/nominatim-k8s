@@ -1,23 +1,23 @@
 ARG nominatim_version=4.3.1
 
-#FROM peterevans/xenial-gcloud:1.2.23 as builder
 FROM ubuntu:20.04 as builder
 ARG nominatim_version
 
 # Let the container know that there is no TTY
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Install CMake from Kitware's official APT repository
-RUN apt-get update \
- && apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget apt-utils\
+# Update and Upgrade the system packages
+RUN apt-get update && apt-get upgrade -y
+
+# Install CMake from Kitware's official APT repository for Ubuntu 20.04 (Focal Fossa)
+RUN apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget apt-utils \
  && wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg \
- && echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ xenial main" > /etc/apt/sources.list.d/kitware.list \
+ && echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main" > /etc/apt/sources.list.d/kitware.list \
  && apt-get update \
- && apt-get install -y cmake
+ && apt-get install -y cmake gcc make
 
 # Install packages
-RUN apt-get -y update \
- && apt-get install -y -qq --no-install-recommends \
+RUN apt-get install -y -qq --no-install-recommends \
     build-essential \
     cmake \
     g++ \
@@ -45,7 +45,7 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y python3.7
 
-# Set Python 3.7 as the default Python3 interpreter:
+# Set Python 3.7 as the default Python3 interpreter
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
 
 # Build Nominatim
@@ -59,6 +59,7 @@ RUN cd /srv \
  && cd build \
  && cmake .. \
  && make
+
 
 
 FROM peterevans/xenial-gcloud:1.2.23
