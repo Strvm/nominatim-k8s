@@ -67,7 +67,7 @@
 
 
 # Use Ubuntu 20.04 as the base image
-FROM ubuntu:20.04 as builder
+FROM ubuntu:20.04
 
 ARG nominatim_version
 
@@ -113,7 +113,7 @@ RUN apt-get install -y --no-install-recommends locales \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* /var/tmp/*
 
-#FROM peterevans/xenial-gcloud:1.2.23 as builder
+FROM peterevans/xenial-gcloud:1.2.23 as builder
 # Copy the application from the builder image
 COPY --from=builder /srv/nominatim /srv/nominatim
 
