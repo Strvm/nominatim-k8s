@@ -21,7 +21,7 @@ RUN apt-get -y update \
     build-essential \
     cmake \
     g++ \
-    nlohmann-json3-dev \
+    nlohmann-json-dev \
     liblua5.2-dev \
     libboost-dev \
     libboost-system-dev \
