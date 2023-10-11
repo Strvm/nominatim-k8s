@@ -9,6 +9,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Update and Upgrade the system packages
 RUN apt-get update && apt-get upgrade -y
 
+# Install CMake directly from Ubuntu 20.04's default repositories
+RUN apt-get install -y cmake gcc make
+
+
 # Install CMake from Kitware's official APT repository for Ubuntu 20.04 (Focal Fossa)
 RUN apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget apt-utils \
  && wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg \
