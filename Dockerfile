@@ -87,9 +87,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends wget gnupg software-properties-common && \
     echo 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main' > /etc/apt/sources.list.d/pgdg.list && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ACCC4CF8 && \
-    apt-get -y update && \
-    apt-get install -y --no-install-recommends locales \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    apt-get -y update
+
+RUN apt-get install -y --no-install-recommends locales \
         postgresql-server-dev-14 \
         postgresql-14-postgis-2.2 \
         postgresql-contrib-14 \
@@ -111,6 +112,7 @@ RUN apt-get -y update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* /var/tmp/*
+
 
 # Copy the application from the builder image
 COPY --from=builder /srv/nominatim /srv/nominatim
