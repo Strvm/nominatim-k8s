@@ -24,7 +24,7 @@ RUN apt-get -y update \
     libgeos-dev \
     libgeos++-dev \
     libproj-dev \
-    postgresql-server-dev-9.5 \
+    postgresql-server-dev-14 \
     php \
     curl
 
@@ -65,9 +65,9 @@ RUN apt-get -y update \
  && locale-gen en_US.UTF-8 \
  && update-locale LANG=en_US.UTF-8 \
  && apt-get install -y -qq --no-install-recommends \
-    postgresql-server-dev-9.5 \
-    postgresql-9.5-postgis-2.2 \
-    postgresql-contrib-9.5 \
+    postgresql-server-dev-14 \
+    postgresql-14-postgis-2.2 \
+    postgresql-contrib-14 \
     apache2 \
     php \
     php-pgsql \
@@ -95,8 +95,8 @@ COPY local.php /srv/nominatim/build/settings/local.php
 COPY nominatim.conf /etc/apache2/sites-enabled/000-default.conf
 
 # Allow remote connections to PostgreSQL
-RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/9.5/main/pg_hba.conf \
- && echo "listen_addresses='*'" >> /etc/postgresql/9.5/main/postgresql.conf
+RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/14/main/pg_hba.conf \
+ && echo "listen_addresses='*'" >> /etc/postgresql/14/main/postgresql.conf
 
 # Set the entrypoint
 COPY docker-entrypoint.sh /
