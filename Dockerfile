@@ -8,12 +8,12 @@ ARG nominatim_version
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install CMake from Kitware's official APT repository
-RUN apt-get update \
- && apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common \
- && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - \
- && apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main' \
- && apt-get update \
- && apt-get install -y cmake=3.18.4-0kitware1ubuntu16.04.1
+RUN apt-get update && apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common \
+    # Fetch the key using a more robust method
+    && wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ xenial main" > /etc/apt/sources.list.d/kitware.list \
+    && apt-get update && apt-get install -y cmake=3.18.4-0kitware1ubuntu16.04.1
+
 
 
 
