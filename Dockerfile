@@ -99,7 +99,10 @@ RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:deadsnakes/ppa -y && \
     apt-get update && \
-    apt-get install -y python3.7
+    apt-get install -y python3.7 \
+
+# Optionally, set Python 3.7 as the default Python3 interpreter:
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
 
 # Copy the application from the builder image
 COPY --from=builder /srv/nominatim /srv/nominatim
