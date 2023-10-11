@@ -24,7 +24,7 @@ RUN apt-get -y update \
     libgeos-dev \
     libgeos++-dev \
     libproj-dev \
-    postgresql-server-dev-14 \
+    postgresql-server-dev-all \
     php \
     curl
 
