@@ -15,9 +15,6 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates gnu
     && apt-get update && apt-get install -y cmake=3.18.4-0kitware1ubuntu16.04.1
 
 
-
-
-
 # Install packages
 RUN apt-get -y update \
  && apt-get install -y -qq --no-install-recommends \
