@@ -7,14 +7,18 @@ ARG nominatim_version
 # Let the container know that there is no TTY
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Install a newer version of CMake
-RUN apt-get purge -y cmake \
- && apt-get update -y \
- && apt-get install -y apt-transport-https wget software-properties-common \
- && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - \
- && apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main' \
- && apt-get update \
- && apt-get install -y cmake
+# Compile CMake from source
+RUN apt-get update \
+ && apt-get install -y wget libssl-dev \
+ && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz \
+ && tar -xvzf cmake-3.18.4.tar.gz \
+ && cd cmake-3.18.4 \
+ && ./bootstrap \
+ && make \
+ && make install \
+ && cd .. \
+ && rm -rf cmake-3.18.4.tar.gz cmake-3.18.4
+
 
 
 # Install packages
