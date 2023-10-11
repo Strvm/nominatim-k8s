@@ -37,6 +37,16 @@ RUN apt-get -y update \
     php \
     curl
 
+# Add PPA and Install Python 3.7 in the builder image
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa -y && \
+    apt-get update && \
+    apt-get install -y python3.7
+
+# Set Python 3.7 as the default Python3 interpreter:
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
+
 # Build Nominatim
 RUN cd /srv \
  && curl -k --silent -L http://www.nominatim.org/release/Nominatim-${nominatim_version}.tar.bz2 -o v${nominatim_version}.tar.bz2 \
@@ -94,15 +104,6 @@ RUN apt-get -y update \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /tmp/* /var/tmp/*
 
-# Add PPA and Install Python 3.7
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa -y && \
-    apt-get update && \
-    apt-get install -y python3.7 \
-
-# Optionally, set Python 3.7 as the default Python3 interpreter:
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
 
 # Copy the application from the builder image
 COPY --from=builder /srv/nominatim /srv/nominatim
