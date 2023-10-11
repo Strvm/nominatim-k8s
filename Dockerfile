@@ -7,6 +7,16 @@ ARG nominatim_version
 # Let the container know that there is no TTY
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Install a newer version of CMake
+RUN apt-get purge -y cmake \
+ && apt-get update -y \
+ && apt-get install -y apt-transport-https wget software-properties-common \
+ && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - \
+ && apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main' \
+ && apt-get update \
+ && apt-get install -y cmake
+
+
 # Install packages
 RUN apt-get -y update \
  && apt-get install -y -qq --no-install-recommends \
