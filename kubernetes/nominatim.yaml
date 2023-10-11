@@ -28,7 +28,7 @@ spec:
           secretName: nominatim-storage-secret
       containers:
       - name: nominatim-k8s
-        image: peterevans/nominatim-k8s:latest
+        image: strvmmm/nominatim-k8s:latest
         env:
         - name: NOMINATIM_MODE
           value: RESTORE

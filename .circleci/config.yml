@@ -2,7 +2,7 @@ version: 2.1
 executors:
   docker-executor:
     environment:
-      IMAGE_NAME: peterevans/nominatim-k8s
+      IMAGE_NAME: strvmmm/nominatim-k8s
       NOMINATIM_PBF_URL: http://download.geofabrik.de/asia/maldives-latest.osm.pbf
     docker:
       - image: circleci/buildpack-deps:stretch

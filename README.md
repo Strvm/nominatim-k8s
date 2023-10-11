@@ -1,5 +1,5 @@
 # Nominatim for Kubernetes
-[![](https://images.microbadger.com/badges/image/peterevans/nominatim-k8s.svg)](https://microbadger.com/images/peterevans/nominatim-k8s)
+[![](https://images.microbadger.com/badges/image/strvmmm/nominatim-k8s.svg)](https://microbadger.com/images/strvmmm/nominatim-k8s)
 [![CircleCI](https://circleci.com/gh/peter-evans/nominatim-k8s/tree/master.svg?style=svg)](https://circleci.com/gh/peter-evans/nominatim-k8s/tree/master)
 
 [Nominatim](https://github.com/openstreetmap/Nominatim) for Kubernetes on Google Container Engine (GKE).
@@ -19,7 +19,7 @@ The Docker image can be run standalone without Kubernetes:
 ```bash
 docker run -d -p 8080:8080 \
 -e NOMINATIM_PBF_URL='http://download.geofabrik.de/asia/maldives-latest.osm.pbf' \
---name nominatim peterevans/nominatim-k8s:latest
+--name nominatim strvmmm/nominatim-k8s:latest
 ```
 Tail the logs to verify the database has been built and Apache is serving requests:
 ```
