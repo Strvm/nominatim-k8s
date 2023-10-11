@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Compile CMake from source
 RUN apt-get update \
- && apt-get install -y wget libssl-dev \
+ && apt-get install -y wget libssl-dev build-essential \
  && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz \
  && tar -xvzf cmake-3.18.4.tar.gz \
  && cd cmake-3.18.4 \
@@ -18,6 +18,7 @@ RUN apt-get update \
  && make install \
  && cd .. \
  && rm -rf cmake-3.18.4.tar.gz cmake-3.18.4
+
 
 
 
