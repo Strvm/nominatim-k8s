@@ -1,73 +1,73 @@
-#ARG nominatim_version=4.3.1
-#
-#FROM ubuntu:20.04 as builder
-#ARG nominatim_version
-#
-## Let the container know that there is no TTY
-#ARG DEBIAN_FRONTEND=noninteractive
-#
-## Update and Upgrade the system packages
-#RUN apt-get update && apt-get upgrade -y
-#
-## Install CMake directly from Ubuntu 20.04's default repositories
-#RUN apt-get install -y cmake gcc make
-#
-#
-## Install CMake from Kitware's official APT repository for Ubuntu 20.04 (Focal Fossa)
-#RUN apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget apt-utils \
-# && wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg \
-# && echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main" > /etc/apt/sources.list.d/kitware.list \
-# && apt-get update \
-# && apt-get install -y cmake gcc make
-#
-## Install packages
-#RUN apt-get install -y -qq --no-install-recommends \
-#    build-essential \
-#    cmake \
-#    g++ \
-#    nlohmann-json3-dev \
-#    liblua5.2-dev \
-#    libboost-dev \
-#    libboost-system-dev \
-#    libboost-filesystem-dev \
-#    libexpat1-dev \
-#    zlib1g-dev \
-#    libxml2-dev \
-#    libbz2-dev \
-#    libpq-dev \
-#    libgeos-dev \
-#    libgeos++-dev \
-#    libproj-dev \
-#    postgresql-server-dev-all \
-#    php \
-#    curl
-#
-## Add PPA and Install Python 3.7 in the builder image
-#RUN apt-get update && \
-#    apt-get install -y software-properties-common && \
-#    add-apt-repository ppa:deadsnakes/ppa -y && \
-#    apt-get update && \
-#    apt-get install -y python3.7
-#
-## Set Python 3.7 as the default Python3 interpreter
-#RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
-#
-## Build Nominatim
-#RUN cd /srv \
-# && curl -k --silent -L http://www.nominatim.org/release/Nominatim-${nominatim_version}.tar.bz2 -o v${nominatim_version}.tar.bz2 \
-# && tar xf v${nominatim_version}.tar.bz2 \
-# && rm v${nominatim_version}.tar.bz2 \
-# && mv Nominatim-${nominatim_version} nominatim \
-# && cd nominatim \
-# && mkdir build \
-# && cd build \
-# && cmake .. \
-# && make
+ARG nominatim_version=4.3.1
+
+FROM ubuntu:20.04 as base
+ARG nominatim_version
+
+# Let the container know that there is no TTY
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Update and Upgrade the system packages
+RUN apt-get update && apt-get upgrade -y
+
+# Install CMake directly from Ubuntu 20.04's default repositories
+RUN apt-get install -y cmake gcc make
+
+
+# Install CMake from Kitware's official APT repository for Ubuntu 20.04 (Focal Fossa)
+RUN apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget apt-utils \
+ && wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg \
+ && echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main" > /etc/apt/sources.list.d/kitware.list \
+ && apt-get update \
+ && apt-get install -y cmake gcc make
+
+# Install packages
+RUN apt-get install -y -qq --no-install-recommends \
+    build-essential \
+    cmake \
+    g++ \
+    nlohmann-json3-dev \
+    liblua5.2-dev \
+    libboost-dev \
+    libboost-system-dev \
+    libboost-filesystem-dev \
+    libexpat1-dev \
+    zlib1g-dev \
+    libxml2-dev \
+    libbz2-dev \
+    libpq-dev \
+    libgeos-dev \
+    libgeos++-dev \
+    libproj-dev \
+    postgresql-server-dev-all \
+    php \
+    curl
+
+# Add PPA and Install Python 3.7 in the builder image
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa -y && \
+    apt-get update && \
+    apt-get install -y python3.7
+
+# Set Python 3.7 as the default Python3 interpreter
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
+
+# Build Nominatim
+RUN cd /srv \
+ && curl -k --silent -L http://www.nominatim.org/release/Nominatim-${nominatim_version}.tar.bz2 -o v${nominatim_version}.tar.bz2 \
+ && tar xf v${nominatim_version}.tar.bz2 \
+ && rm v${nominatim_version}.tar.bz2 \
+ && mv Nominatim-${nominatim_version} nominatim \
+ && cd nominatim \
+ && mkdir build \
+ && cd build \
+ && cmake .. \
+ && make
 
 
 
 # Use Ubuntu 20.04 as the base image
-FROM ubuntu:20.04 as base
+#FROM ubuntu:20.04 as base
 
 ARG nominatim_version
 
