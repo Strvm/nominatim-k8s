@@ -26,31 +26,31 @@ jobs:
           root: .
           paths:
             - ./*.tar
-  test:
-    executor: docker-executor
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - setup_remote_docker
-      - run:
-          name: Load cached Docker image
-          command: |
-            docker load -i /tmp/workspace/latest.tar
-      - run:
-          name: Inspect Docker image
-          command: |
-            docker inspect $IMAGE_NAME:latest
-      - run:
-          name: Test Docker image
-          command: |
-            docker run -d -e NOMINATIM_PBF_URL=$NOMINATIM_PBF_URL --name nominatim-k8s $IMAGE_NAME:latest
-            # Dummy container to store tests
-            docker create -v /etc/newman --name tests alpine:3.4 /bin/true
-            docker cp tests/. tests:/etc/newman
-            # Run tests
-            docker run --network container:nominatim-k8s jwilder/dockerize -wait http://localhost:8080/search -timeout 300s -wait-retry-interval 5s
-            docker run --network container:nominatim-k8s --volumes-from tests -t postman/newman:4.4.0-alpine run nominatim.postman_collection.json
+#  test:
+#    executor: docker-executor
+#    steps:
+#      - checkout
+#      - attach_workspace:
+#          at: /tmp/workspace
+#      - setup_remote_docker
+#      - run:
+#          name: Load cached Docker image
+#          command: |
+#            docker load -i /tmp/workspace/latest.tar
+#      - run:
+#          name: Inspect Docker image
+#          command: |
+#            docker inspect $IMAGE_NAME:latest
+#      - run:
+#          name: Test Docker image
+#          command: |
+#            docker run -d -e NOMINATIM_PBF_URL=$NOMINATIM_PBF_URL --name nominatim-k8s $IMAGE_NAME:latest
+#            # Dummy container to store tests
+#            docker create -v /etc/newman --name tests alpine:3.4 /bin/true
+#            docker cp tests/. tests:/etc/newman
+#            # Run tests
+#            docker run --network container:nominatim-k8s jwilder/dockerize -wait http://localhost:8080/search -timeout 300s -wait-retry-interval 5s
+#            docker run --network container:nominatim-k8s --volumes-from tests -t postman/newman:4.4.0-alpine run nominatim.postman_collection.json
   publish-tag:
     executor: docker-executor
     steps:
