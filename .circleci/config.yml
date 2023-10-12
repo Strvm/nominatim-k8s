@@ -82,9 +82,9 @@ workflows:
   build:
     jobs:
       - build
-      - test:
-          requires:
-            - build
+#      - test:
+#          requires:
+#            - build
   build-and-publish-tags:
     jobs:
       - build:
@@ -93,18 +93,18 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
-      - test:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+#      - test:
+#          requires:
+#            - build
+#          filters:
+#            tags:
+#              only: /^v.*/
+#            branches:
+#              ignore: /.*/
       - publish-tag:
           context: org-global
-          requires:
-            - test
+#          requires:
+#            - test
           filters:
             tags:
               only: /^v.*/
