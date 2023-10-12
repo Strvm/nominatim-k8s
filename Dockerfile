@@ -67,7 +67,7 @@
 
 
 # Use Ubuntu 20.04 as the base image
-FROM ubuntu:20.04
+FROM ubuntu:20.04 as base
 
 ARG nominatim_version
 
