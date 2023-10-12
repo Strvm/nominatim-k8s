@@ -115,7 +115,8 @@ RUN apt-get install -y --no-install-recommends locales \
 
 FROM peterevans/xenial-gcloud:1.2.23 as builder
 # Copy the application from the builder image
-COPY --from=builder /srv/nominatim /srv/nominatim
+COPY --from=base /srv/nominatim /srv/nominatim
+
 
 # Configure Nominatim
 COPY local.php /srv/nominatim/build/settings/local.php
