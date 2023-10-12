@@ -113,7 +113,6 @@ RUN apt-get install -y --no-install-recommends locales \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* /var/tmp/*
 
-FROM peterevans/xenial-gcloud:1.2.23 as builder
 # Copy the application from the builder image
 COPY --from=base /srv/nominatim /srv/nominatim
 
