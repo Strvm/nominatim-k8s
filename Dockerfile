@@ -67,7 +67,7 @@ RUN cd /srv \
 
 
 # Use Ubuntu 20.04 as the base image
-#FROM ubuntu:20.04 as base
+FROM ubuntu:20.04
 
 ARG nominatim_version
 
